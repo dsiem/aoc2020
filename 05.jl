@@ -1,12 +1,9 @@
 function day05(file="05.input")
-    input = map(eachline(file)) do l
-        s = replace(collect(l), Dict(zip("FBLR", "0101"))...) |> join
-        parse(Int, s, base=2)
-    end
+    input = map(line -> parse(Int, map(c -> c ∈ ['B', 'R'] ? '1' : '0', line), base=2), eachline(file))
 
     # Part 1
     maximum(input) |> println
 
     # Part 2
-    sort(input) |> x -> x[findfirst(!isone, diff(x))]+1 |> println
+    setdiff(minimum(input):maximum(input), input) |> first |> println
 end
