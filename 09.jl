@@ -1,17 +1,15 @@
-using Combinatorics
-
 function day09(file="09.input", range=25)
     input = parse.(Int, readlines(file))
 
     # Part 1
-    (n = part1(input)) |> println
+    (n = part1(input, range)) |> println
 
     # Part 2
     println(part2(input, n))
 end
 
-function part1(input)
-    n = Iterators.filter(enumerate(input)) do (i,v)
+function part1(input, range)
+    Iterators.filter(enumerate(input)) do (i,v)
         i > range && !any(x -> v-x ∈ input[i-range:i-1], input[i-range:i-2])
     end |> first |> last
 end
