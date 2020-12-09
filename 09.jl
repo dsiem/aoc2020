@@ -5,7 +5,7 @@ function day09(file="09.input", range=25)
     (n = part1(input, range)) |> println
 
     # Part 2
-    println(part2(input, n))
+    part2(input, n) |> println
 end
 
 function part1(input, range)
