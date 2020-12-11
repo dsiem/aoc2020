@@ -10,7 +10,7 @@ function day10(file="10.input")
     count(diffs .== 1) * count(diffs .== 3) |> println
 
     # Part 2 (use that differences are 1 or 3, never 2)
-    prod(first(g) != 1 || trib(length(g)+2) for g ∈ groupby(first, diffs)) |> println
+    prod(first(g) ≠ 1 || trib(length(g)+2) for g ∈ groupby(first, diffs)) |> println
 end
 
 # Tribonacci numbers

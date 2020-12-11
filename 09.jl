@@ -17,7 +17,7 @@ end
 
 function part2(input, n)
     i, j, s = 1, 0, 0
-    while s != n
+    while s ≠ n
         if s < n
             j += 1
             s += input[j]
