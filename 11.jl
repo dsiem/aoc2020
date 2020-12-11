@@ -1,0 +1,41 @@
+function day11(file="11.input")
+    input = hcat(collect.(readlines(file))...)
+    
+    for part2 ∈ [false, true]
+        seats = input
+        while true
+            seats, tmp = step(seats, part2), seats
+            seats == tmp && break
+        end
+        count(seats .== '#') |> println
+    end
+end
+
+function step(seats, part2)
+    map(Iterators.product(axes(seats)...)) do (i,j)
+        if seats[i,j] == 'L' && occupied(seats, i, j, part2) == 0
+            '#'
+        elseif seats[i,j] == '#' && occupied(seats, i, j, part2) ≥ 5
+            'L'
+        else
+            seats[i,j]
+        end
+    end
+end
+
+function occupied(seats, x, y, part2)
+    n = 0
+    for dx ∈ -1:1, dy ∈ -1:1
+        i, j = x+dx, y+dy
+        if part2
+            dx == 0 && dy == 0 && continue
+            while checkbounds(Bool, seats, i, j) && seats[i,j] == '.'
+                i += dx; j += dy
+            end
+        end
+        if checkbounds(Bool, seats, i, j) && seats[i,j] == '#'
+            n += 1
+        end
+    end
+    return n
+end
