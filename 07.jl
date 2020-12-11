@@ -1,7 +1,7 @@
 function day07(file="07.input")
     rules = map(eachline(file)) do line
-        bag, content = split(line, " bags contain ")
-        bag => Dict(m[2] => parse(Int, m[1]) for m ∈ eachmatch(r"(\d+) ([\w\s]+) bag", content))
+        xs = map(m -> m.match, eachmatch.(r"^(\w+ \w+)|(\d \w+ \w+)", line))
+        xs[1] => Dict(x[3:end] => parse(Int, x[1]) for x ∈ xs[2:end])
     end |> Dict
 
     # Part 1
