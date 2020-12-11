@@ -2,7 +2,8 @@ function day09(file="09.input", range=25)
     input = parse.(Int, readlines(file))
 
     # Part 1
-    (n = part1(input, range)) |> println
+    n = part1(input, range)
+    println(n)
 
     # Part 2
     part2(input, n) |> println
