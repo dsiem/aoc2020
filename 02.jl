@@ -4,9 +4,8 @@ function day02(file="02.input")
         (parse(Int, a), parse(Int, b), first(c), d)
     end
 
-    # Part 1
-    count(((a,b,c,d),) -> count(x -> x == c, d) ∈ a:b, input) |> println
+    part1 = count(((a,b,c,d),) -> count(x -> x == c, d) ∈ a:b, input)
+    part2 = count(((a,b,c,d),) -> (c == d[a]) ⊻ (c == d[b]), input)
 
-    # Part 2
-    count(((a,b,c,d),) -> (c == d[a]) ⊻ (c == d[b]), input) |> println
+    return part1, part2
 end

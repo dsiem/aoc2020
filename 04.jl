@@ -7,7 +7,7 @@ function day04(file="04.input")
         "byr" => x -> parse(Int, x) ∈ 1920:2002,
         "iyr" => x -> parse(Int, x) ∈ 2010:2020,
         "eyr" => x -> parse(Int, x) ∈ 2020:2030,
-        "hgt" => x -> 
+        "hgt" => x ->
             (endswith(x, "cm") && parse(Int, x[1:end-2]) ∈ 150:193) ||
             (endswith(x, "in") && parse(Int, x[1:end-2]) ∈ 59:76),
         "hcl" => x -> contains(x, r"^#[0-9a-f]{6}$"),
@@ -15,11 +15,10 @@ function day04(file="04.input")
         "pid" => x -> contains(x, r"^\d{9}$")
     )
 
-    havekeys = filter(x -> haskey.(Ref(x), keys(reqs)) |> all, input) 
+    havekeys = filter(x -> haskey.(Ref(x), keys(reqs)) |> all, input)
 
-    # Part 1
-    length(havekeys) |> println
+    part1 = length(havekeys)
+    part2 = count(x -> all(((k,v),) -> v(x[k]), reqs), havekeys)
 
-    # Part 2
-    count(x -> all(((k,v),) -> v(x[k]), reqs), havekeys) |> println
+    return part1, part2
 end

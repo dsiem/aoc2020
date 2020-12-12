@@ -6,11 +6,10 @@ function day10(file="10.input")
     append!(input, input[end]+3)
     diffs = diff(input)
     
-    # Part 1
-    count(diffs .== 1) * count(diffs .== 3) |> println
+    part1 = count(diffs .== 1) * count(diffs .== 3)
+    part2 = prod(first(g) ≠ 1 || trib(length(g)+2) for g ∈ groupby(first, diffs)) # uses that differences are 1 or 3, never 2
 
-    # Part 2 (use that differences are 1 or 3, never 2)
-    prod(first(g) ≠ 1 || trib(length(g)+2) for g ∈ groupby(first, diffs)) |> println
+    return part1, part2
 end
 
 # Tribonacci numbers
