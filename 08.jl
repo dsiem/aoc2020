@@ -4,20 +4,10 @@ function day08(file="08.input")
         [op, parse(Int, n)]
     end
 
-    # Part 1
-    execute(code) |> first |> println
+    part1 = execute(code) |> first
+    part2 = fixexec(code)
 
-    # Part 2
-    for line ∈ 1:length(code)
-        code[line][1] == "acc" && continue
-        code[line][1] = code[line][1] == "jmp" ? "nop" : "jmp"
-        acc, lastline = execute(code)
-        code[line][1] = code[line][1] == "jmp" ? "nop" : "jmp"
-        if lastline == length(code)+1
-            println(acc)
-            break
-        end
-    end
+    return part1, part2
 end
 
 function execute(code)
@@ -34,4 +24,14 @@ function execute(code)
         end
     end
     return acc, line
+end
+
+function fixexec(code)
+    for line ∈ 1:length(code)
+        code[line][1] == "acc" && continue
+        code[line][1] = code[line][1] == "jmp" ? "nop" : "jmp"
+        acc, lastline = execute(code)
+        code[line][1] = code[line][1] == "jmp" ? "nop" : "jmp"
+        lastline == length(code)+1 && return acc
+    end
 end

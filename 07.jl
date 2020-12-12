@@ -4,12 +4,17 @@ function day07(file="07.input")
         xs[1] => Dict(x[3:end] => parse(Int, x[1]) for x ∈ xs[2:end])
     end |> Dict
 
-    # Part 1
-    part1(rules, bag) = haskey(rules[bag], "shiny gold") || any(k -> part1(rules, k), keys(rules[bag]))
-    count(bag -> part1(rules, bag), keys(rules)) |> println
+    part1 = count(bag -> containsbag(rules, bag), keys(rules))
+    part2 = countbags(rules, "shiny gold")
 
-    # Part 2
-    # > v1.6: part2(rules, bag) = sum(((k, v),) -> v * (1 + part2(rules, k)), rules[bag], init=0)
-    part2(rules, bag) = mapreduce(((k, v),) -> v * (1 + part2(rules, k)), +, rules[bag], init=0)
-    part2(rules, "shiny gold") |> println
+    return part1, part2
+end
+
+function containsbag(rules, bag)
+    haskey(rules[bag], "shiny gold") || any(k -> containsbag(rules, k), keys(rules[bag]))
+end
+
+function countbags(rules, bag)
+    # > v1.6: sum(((k, v),) -> v * (1 + countbags(rules, k)), rules[bag], init=0)
+    mapreduce(((k, v),) -> v * (1 + countbags(rules, k)), +, rules[bag], init=0)
 end

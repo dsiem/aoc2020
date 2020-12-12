@@ -1,11 +1,10 @@
 function day03(file="03.input")
     input = readlines(file)
 
-    # Part 1
-    impacts(input, 3) |> println
+    part1 = impacts(input, 3)
+    part2 = prod(slope -> impacts(input, slope...), [1, 3, 5, 7, [1, 2]])
 
-    # Part 2
-    prod(slope -> impacts(input, slope...), [1, 3, 5, 7, [1, 2]]) |> println
+    return part1, part2
 end
 
 function impacts(input, right, down=1)
