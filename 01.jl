@@ -1,10 +1,17 @@
-using Combinatorics
-
 function day01(file="01.input")
-    input = parse.(Int, readlines(file))
+    input = parse.(Int, readlines(file)) |> sort
 
-    part1 = Iterators.filter(xs -> sum(xs) == 2020, combinations(input, 2)) |> first |> prod
-    part2 = Iterators.filter(xs -> sum(xs) == 2020, combinations(input, 3)) |> first |> prod
+    function part1(xs)
+        for i ∈ xs, j ∈ xs
+            i+j == 2020 && return i*j
+        end
+    end
 
-    return part1, part2
+    function part2(xs)
+        for i ∈ xs, j ∈ xs, k ∈ xs
+            i+j+k == 2020 && return i*j*k
+        end
+    end
+
+    return part1(input), part2(input)
 end
