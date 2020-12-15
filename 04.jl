@@ -1,8 +1,4 @@
 function day04(file="04.input")
-    input = split(read(file, String), "\n\n") .|>
-        x -> split(x, [' ', '\n']) |>
-        x -> Dict(x .|> y -> split(y, ':'))
-
     reqs = Dict(
         "byr" => x -> parse(Int, x) ∈ 1920:2002,
         "iyr" => x -> parse(Int, x) ∈ 2010:2020,
@@ -15,10 +11,11 @@ function day04(file="04.input")
         "pid" => x -> contains(x, r"^\d{9}$")
     )
 
-    havekeys = filter(x -> haskey.(Ref(x), keys(reqs)) |> all, input)
-
-    part1 = length(havekeys)
-    part2 = count(x -> all(((k,v),) -> v(x[k]), reqs), havekeys)
+    passports = split(read(file, String), "\n\n") .|> x -> Dict(split.(split(x), ':'))
+    valid = filter(x -> haskey.(Ref(x), keys(reqs)) |> all, passports)
+    
+    part1 = length(valid)
+    part2 = count(x -> all(((k,v),) -> v(x[k]), reqs), valid)
 
     return part1, part2
 end
