@@ -1,15 +1,15 @@
-function day15(input=[6,4,12,1,20,0,16])
-    part1 = age(input, 2020)
-    part2 = age(input, 30000000)
+function day15(seed=[6,4,12,1,20,0,16])
+    part1 = vaneck(seed, 2020)
+    part2 = vaneck(seed, 30000000)
 
     return part1, part2
 end
 
-function age(input, turns)
-    prev = last(input)
-    turn = Dict(n => i for (i,n) ∈ enumerate(input[1:end-1]))
-    for i ∈ length(input):turns-1
-        turn[prev], prev = i, i-get(turn, prev, i)
+function vaneck(seed, turns)
+    n = last(seed)
+    turn = Dict(s => i for (i,s) ∈ enumerate(seed[1:end-1]))
+    for i ∈ length(seed):turns-1
+        turn[n], n = i, i-get(turn, n, i)
     end
-    prev
+    return n
 end
