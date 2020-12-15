@@ -5,11 +5,14 @@ function day15(seed=[6,4,12,1,20,0,16])
     return part1, part2
 end
 
-function vaneck(seed, turns)
+function vaneck(seed, stop)
     n = last(seed)
-    turn = Dict(s => i for (i,s) ∈ enumerate(seed[1:end-1]))
-    for i ∈ length(seed):turns-1
-        turn[n], n = i, i-get(turn, n, i)
+    mem = fill(0, stop-1)
+    for i ∈ 1:length(seed)-1
+        mem[seed[i]+1] = i
+    end
+    for i ∈ length(seed):stop-1
+        mem[n+1], n = i, mem[n+1] == 0 ? 0 : i-mem[n+1]
     end
     return n
 end
