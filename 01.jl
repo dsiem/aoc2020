@@ -9,7 +9,7 @@ function day01(file="01.input")
 
     function part2(xs)
         for i ∈ xs, j ∈ xs, k ∈ xs
-            i+j+k == 2020 && return i*j*k
+            (s=i+j) < 2020 && s+k == 2020 && return i*j*k
         end
     end
 
