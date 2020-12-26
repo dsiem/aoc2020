@@ -16,13 +16,13 @@ function day21(file="21.input")
     end
     
     dictionary = Dict{String,String}()
-    identified = Vector{String}()
-    while !isempty(candidates)
+    
+    while length(dictionary) < length(candidates)
         for (allergene, ingredients) ∈ candidates
-            candidates[allergene] = setdiff(ingredients, identified)
             if length(ingredients) == 1
-                dictionary[allergene] = first(pop!(candidates, allergene))
-                push!(identified, dictionary[allergene])
+                dictionary[allergene] = first(ingredients)
+            else
+                candidates[allergene] = setdiff(ingredients, values(dictionary))
             end
         end
     end
