@@ -14,9 +14,9 @@ function day21(file="21.input")
             end
         end
     end
-    
+
     dictionary = Dict{String,String}()
-    
+
     while length(dictionary) < length(candidates)
         for (allergene, ingredients) ∈ candidates
             if length(ingredients) == 1
@@ -27,7 +27,7 @@ function day21(file="21.input")
         end
     end
 
-    part1 = count(!in(Set(values(dictionary))), allingreds)
+    part1 = count(!in(tuple(values(dictionary)...)), allingreds)
     part2 = join(values(sort(dictionary)), ',')
 
     return part1, part2
